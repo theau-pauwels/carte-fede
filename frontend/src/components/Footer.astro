@@ -1,0 +1,36 @@
+---
+---
+<footer style="margin-top:2rem; padding:1rem; border-top:1px solid #ddd; text-align:center;">
+  <nav id="footer-links">Chargement…</nav>
+</footer>
+
+<script>
+(async () => {
+  const el = document.getElementById('footer-links');
+  try {
+    const r = await fetch('/api/me', { credentials:'include' });
+    if (!r.ok) { el.innerHTML = `<a href="/login">Connexion</a>`; return; }
+    const j = await r.json();
+
+    const links = [];
+    if (!j?.email && !j?.identifiant) {
+      links.push({href:'/login', label:'Connexion'});
+    } else {
+      links.push({href:'/', label:'Accueil'});
+      links.push({href:'/cartes', label:'Mes cartes'});
+      links.push({href:'/app/qr', label:'Mon QR'});
+      if (j.role === 'admin') {
+        links.push({href:'/admin', label:'Admin'});
+        links.push({href:'/admin/users', label:'Gestion utilisateurs'});
+        links.push({href:'/verif', label:'Vérification'});
+      } else if (j.role === 'verifier') {
+        links.push({href:'/verif', label:'Vérification'});
+      }
+      links.push({href:'/logout', label:'Déconnexion'});
+    }
+    el.innerHTML = links.map(l => `<a href="${l.href}">${l.label}</a>`).join(' | ');
+  } catch {
+    el.innerHTML = `<a href="/login">Connexion</a>`;
+  }
+})();
+</script>
