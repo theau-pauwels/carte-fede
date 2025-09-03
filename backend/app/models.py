@@ -25,6 +25,7 @@ class User(UserMixin, db.Model):
     password_hash = db.Column(db.String, nullable=False)
     role = db.Column(db.Enum(Role, name="role_enum"), default=Role.MEMBER, nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    approved = db.Column(db.Boolean, nullable=False, default=False)
 
     memberships = relationship("Membership", backref="user", cascade="all, delete-orphan")
 
@@ -32,6 +33,11 @@ class User(UserMixin, db.Model):
         db.CheckConstraint("(member_id IS NOT NULL) OR (email IS NOT NULL)", name="user_id_or_email_required"),
         db.CheckConstraint("(member_id ~ '^[0-9]{6}$') OR (member_id IS NULL)", name="member_id_six_digits"),
     )
+
+    # Flask-Login: un compte non validé n'est pas actif
+    @property
+    def is_active(self): # type: ignore[override]
+    return bool(getattr(self, "approved", False))
 
 class Membership(db.Model):
     __tablename__ = "membership"
