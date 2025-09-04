@@ -1,14 +1,58 @@
 ---
+import Layout from "@layouts/Layout.astro";
+
+import { Image } from "astro:assets";
+
+import statueFPMs from "@images/statue-fpms.jpg";
 ---
-<html lang="fr">
-  <head>
-    <meta charset="utf-8" />
-    <title>Accueil</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <style>body{font-family:system-ui;margin:2rem}</style>
-  </head>
-  <body>
-    <h1>Frontend Astro opérationnel</h1>
-    <p><a href="/login">Se connecter</a> · <a href="/admin">Admin</a> · <a href="/admin/users">Liste utilisateurs</a> · <a href="/app/password">Changer mot de passe</a> · <a href="/app/cartes">Mes cartes</a></p>
-  </body>
-</html>
+
+
+<Layout title="Accueil">
+  <main class="container mx-auto space-y-6 px-2 pt-4">
+<section
+      class="relative -z-10 h-[calc(100vh_-_15rem)] overflow-hidden rounded-3xl shadow-xl"
+    >
+      <Image
+        class="-z-10 h-full object-cover"
+        src={statueFPMs}
+        alt="Statue des deux fondateurs de la Faculté polytechnique de Mons, Guibal et Devillez"
+        quality={30}
+        width={1920}
+        height={1280}
+        format="webp"
+      />
+      <div class="absolute inset-0 flex items-end pb-16">
+        <h1
+          class="mx-auto w-[100%-3rem] max-w-4xl px-8 pe-16 text-4xl font-semibold text-white shadow-black text-shadow-title"
+        >
+          Bienvenue sur le site de la
+          <span
+            class="bg-gradient-to-r from-blue-900 to-blue-600 bg-clip-text text-transparent drop-shadow-white text-shadow-none"
+            >carte de la Fédération des Étudiants</span
+          >
+          de la Faculté Polytechnique de Mons !
+        </h1>
+      </div>
+    </section>
+    <section
+      class="mx-auto max-w-5xl space-y-2 rounded-lg border-l-4 border-blue-900 bg-white px-6 py-3 font-medium shadow-box"
+    >
+      <h2 class="text-xl">Qu'est-ce que la carte Fédé ?</h2>
+      <p>
+        La <strong>carte Fédé</strong>
+        blablablablabla
+      </p>
+
+      <ul>
+        <li><h3>Ses buts principaux sont :</h3></li>
+        <li>
+          - blablabla
+        </li>
+        <li>
+          - blablabla
+        </li>
+      </ul>
+    </section>
+  
+  </main>
+</Layout>
