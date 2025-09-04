@@ -30,7 +30,9 @@ services:
       - /app/node_modules
 
   nginx:
-    build: ./nginx
+    build: 
+      context: ./nginx
+      dockerfile: Dockerfile
     ports:
       - "80:80"
     depends_on:
